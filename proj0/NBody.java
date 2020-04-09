@@ -1,9 +1,9 @@
 /** The universe */
 public class NBody {
 
-    public static final String imageFolder = "images/";
-    public static final String backGroundName = "starfield.jpg";
-    public static final int waitTimeMilliseconds = 10;
+    private static final String imageFolder = "images/";
+    private static final String backGroundName = "starfield.jpg";
+    private static final int waitTimeMilliseconds = 10;
     
     /** Read radius from file */
     public static double readRadius(String file){

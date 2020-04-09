@@ -1,10 +1,10 @@
 /** class planet */
 public class Planet {
-    
+
+    private static final String imageFolder = "images/";
+    private static final double G = 6.67e-11;
     public double xxPos, yyPos, xxVel, yyVel, mass;
     public String imgFileName;
-    public static final String imageFolder = "images/";
-    public static final double G = 6.67e-11;
 
     public Planet(double xP, double yP, double xV, double yV, double m, String img) {
         this.xxPos = xP;
