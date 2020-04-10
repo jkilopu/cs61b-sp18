@@ -16,12 +16,14 @@ public class Planet {
     }
 
     public Planet(Planet p) {
-        this.xxPos = p.xxPos; // Can't use: this = p;
-        this.yyPos = p.yyPos;
-        this.xxVel = p.xxVel;
-        this.yyVel = p.yyVel;
-        this.mass = p.mass;
-        this.imgFileName = p.imgFileName;
+        this(p.xxPos, p.yyPos, p.xxVel, p.yyVel, p.mass, p.imgFileName);
+        /* my method */
+        // this.xxPos = p.xxPos; // Can't use: this = p;
+        // this.yyPos = p.yyPos;
+        // this.xxVel = p.xxVel;
+        // this.yyVel = p.yyVel;
+        // this.mass = p.mass;
+        // this.imgFileName = p.imgFileName;
     }
 
     /** calculate the force between two planets */
