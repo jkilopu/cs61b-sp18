@@ -81,9 +81,11 @@ public class IntList {
      */
 
     public static IntList dcatenate(IntList A, IntList B) {
-        if (A == null) {
-            return B;
+        if (A == null) { /* A bug can't be fixed, because I can't change where original A points */
+            A = B;
+            return A;
         }
+
         IntList p = A;
         while(p.rest != null){
             p = p.rest;
