@@ -1,12 +1,10 @@
-public class ArgsSum {
-	public static void main(String[] args) {
-		int N = args.length;
-		int i = 0;
-		int sum = 0;
-		while (i < N) {
-			sum = sum + Integer.parseInt(args[i]);
-			i = i + 1;
-		}
-		System.out.println(sum);		
-	}
-} 
+/** Assume that args are numbers, and add them */
+public class ArgsSum{
+    public static void main(String[] args){
+        int sum = 0;
+        for(String s : args){
+            sum += Integer.parseInt(s);
+        }
+        System.out.println(sum);
+    }
+}
