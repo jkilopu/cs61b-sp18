@@ -2,7 +2,7 @@
  * Deque implemented with double-linked-circular-list.
  * @author jkilopu
  */
-public class LinkedListDeque<any> {
+public class LinkedListDeque<Any> {
 
     private int size;
     private AnyNode sentinel; // first == sentinel.next, last == sentinel.prev
@@ -10,14 +10,14 @@ public class LinkedListDeque<any> {
     /**
      * Create an empty deque.
      */
-    public LinkedListDeque(){
+    public LinkedListDeque() {
         sentinel = new AnyNode();
         size = 0;
     }
     /**
      * Create a copy of another deque.
      */
-    public LinkedListDeque(LinkedListDeque other){
+    public LinkedListDeque(LinkedListDeque other) {
         AnyNode p = other.sentinel.next;
         sentinel = new AnyNode();
         size = 0;
@@ -30,15 +30,15 @@ public class LinkedListDeque<any> {
     /**
      * The node of Double-linked-list.
      */
-    private class AnyNode{
-        any item;
+    private class AnyNode {
+        Any item;
         AnyNode prev;
         AnyNode next;
 
         /**
          * Create a node that is circular.
          */
-        public AnyNode(){ // item is automatically assigned null when instantiate.
+        AnyNode() { // item is automatically assigned null when instantiate.
             prev = this;
             next = this;
         }
@@ -46,8 +46,8 @@ public class LinkedListDeque<any> {
         /**
          * Return the item at the ith position in this.
          */
-        private any getRecursive(int index){
-            if(index == 0){
+        private Any getRecursive(int index) {
+            if (index == 0) {
                 return this.item;
             }
             return this.next.getRecursive(index - 1);
@@ -57,7 +57,7 @@ public class LinkedListDeque<any> {
     /**
      * Add a node at first.
      */
-    public void addFirst(any x){
+    public void addFirst(Any x) {
         AnyNode p = new AnyNode();
         p.item = x;
         p.prev = sentinel;
@@ -70,7 +70,7 @@ public class LinkedListDeque<any> {
     /**
      * Add a node at last.
      */
-    public void addLast(any x){
+    public void addLast(Any x) {
         AnyNode p = new AnyNode();
         p.item = x;
         p.next = sentinel;
@@ -83,9 +83,9 @@ public class LinkedListDeque<any> {
     /**
      * Print all the items in deque from first to last
      */
-    public void printDeque(){
+    public void printDeque() {
         AnyNode p = sentinel.next;
-        while (p != sentinel){
+        while (p != sentinel) {
             System.out.print(p.item + " ");
             p = p.next;
         }
@@ -95,11 +95,11 @@ public class LinkedListDeque<any> {
     /**
      * Remove the first node and return its value.
      */
-    public any removeFirst(){
-        any x = sentinel.next.item;
+    public Any removeFirst() {
+        Any x = sentinel.next.item;
         sentinel.next.next.prev = sentinel;
         sentinel.next = sentinel.next.next;
-        if(x != null){  // avoid negative number
+        if (x != null) {  // avoid negative number
             size--;
         }
         return x;
@@ -108,11 +108,11 @@ public class LinkedListDeque<any> {
     /**
      * Remove the last node and return its value.
      */
-    public any removeLast(){
-        any x = sentinel.prev.item;
+    public Any removeLast() {
+        Any x = sentinel.prev.item;
         sentinel.prev.prev.next = sentinel;
         sentinel.prev = sentinel.prev.prev;
-        if(x != null){
+        if (x != null) {
             size--;
         }
         return x;
@@ -121,9 +121,9 @@ public class LinkedListDeque<any> {
     /**
      * Return the ith items
      */
-    public any get(int index){
+    public Any get(int index) {
         AnyNode p = sentinel.next;
-        for(int i = 0; i < index && p != sentinel; i++){
+        for (int i = 0; i < index && p != sentinel; i++) {
             p = p.next;
         }
         return p.item;
@@ -132,8 +132,8 @@ public class LinkedListDeque<any> {
     /**
      * Return the ith items recursively.
      */
-    public any getRecursive(int index){
-        if(index > size - 1){
+    public Any getRecursive(int index) {
+        if (index > size - 1) {
             return null;
         }
         return this.sentinel.next.getRecursive(index);
@@ -142,14 +142,14 @@ public class LinkedListDeque<any> {
     /**
      * Return true if the deque is empty.
      */
-    public boolean isEmpty(){
+    public boolean isEmpty() {
         return size == 0;
     }
 
     /**
      * Return the size of the deque.
      */
-    public int size(){
+    public int size() {
         return size;
     }
 }

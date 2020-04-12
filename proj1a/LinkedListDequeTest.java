@@ -68,13 +68,13 @@ public class LinkedListDequeTest {
 
 		System.out.println("Make sure to uncomment the lines below (and delete this print statement).");
 
-		LinkedListDeque<Integer> lld1 = new LinkedListDeque<Integer>();
+		LinkedListDeque lld1 = new LinkedListDeque();
 		// should be empty 
 		boolean passed = checkEmpty(true, lld1.isEmpty());
 
 		lld1.addFirst(10);
-		lld1.addFirst(11);
-		lld1.addFirst(13);
+		lld1.addFirst("wow!");
+		lld1.addFirst(432.156);
 		lld1.addFirst(15);
 		lld1.printDeque();
 		// should not be empty 
