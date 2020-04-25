@@ -1,5 +1,5 @@
 public class ArrayDeque<T> {
-    private static final int FACTOR = 3;
+    private static final int FACTOR = 2;
     private static final int PROPORTION = 4;
     private int capacity;
     private int first;
@@ -84,6 +84,8 @@ public class ArrayDeque<T> {
      * Remove the first node and return its value.
      */
     public T removeFirst() {
+        if (size == 0)
+            return null;
         first = succ(++first);
         T ret = items[first];
         items[first] = null;
@@ -98,6 +100,8 @@ public class ArrayDeque<T> {
      * Remove the last node and return its value.
      */
     public T removeLast() {
+        if (size == 0)
+            return null;
         last = succ(--last);
         T ret = items[last];
         items[last] = null;

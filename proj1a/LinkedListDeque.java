@@ -96,12 +96,13 @@ public class LinkedListDeque<T> {
      * Remove the first node and return its value.
      */
     public T removeFirst() {
+        if (size == 0) {    // avoid negative number
+            return null;
+        }
         T x = sentinel.next.item;
         sentinel.next.next.prev = sentinel;
         sentinel.next = sentinel.next.next;
-        if (x != null) {  // avoid negative number
-            size--;
-        }
+        size--;
         return x;
     }
 
@@ -109,6 +110,9 @@ public class LinkedListDeque<T> {
      * Remove the last node and return its value.
      */
     public T removeLast() {
+        if (size == 0) {    // avoid negative number
+            return null;
+        }
         T x = sentinel.prev.item;
         sentinel.prev.prev.next = sentinel;
         sentinel.prev = sentinel.prev.prev;
