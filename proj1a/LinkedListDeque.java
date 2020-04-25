@@ -1,7 +1,3 @@
-/**
- * Deque implemented with double-linked-circular-list.
- * @author jkilopu
- */
 public class LinkedListDeque<T> {
 
     private int size;
@@ -13,18 +9,6 @@ public class LinkedListDeque<T> {
     public LinkedListDeque() {
         sentinel = new TNode();
         size = 0;
-    }
-    /**
-     * Create a copy of another deque.
-     */
-    public LinkedListDeque(LinkedListDeque other) {
-        TNode p = other.sentinel.next;
-        sentinel = new TNode();
-        size = 0;
-        while (p != other.sentinel) {
-            addLast(p.item);
-            p = p.next;
-        }
     }
 
     /**

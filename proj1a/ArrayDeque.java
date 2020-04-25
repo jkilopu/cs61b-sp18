@@ -5,7 +5,7 @@ public class ArrayDeque<T> {
     private int first;
     private int last;
     private int size;
-    T[] items;    // (first, last)
+    private  T[] items;    // (first, last)
 
     /**
      * Create an empty deque.
