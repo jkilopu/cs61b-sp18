@@ -1,18 +1,18 @@
-public class ArrayDeque<Any> {
+public class ArrayDeque<T> {
     private static final int FACTOR = 3;
     private static final int PROPORTION = 4;
     private int capacity;
     private int first;
     private int last;
     private int size;
-    Any[] items;    // (first, last)
+    T[] items;    // (first, last)
 
     /**
      * Create an empty deque.
      */
-    ArrayDeque() {
+    public ArrayDeque() {
         capacity = 8;
-        items = (Any[]) new Object[capacity];
+        items = (T[]) new Object[capacity];
         first = 0;
         last = 1;
         size = 0;
@@ -34,8 +34,8 @@ public class ArrayDeque<Any> {
     /**
      * Resize the deque to cap size.
      */
-    public void resize(int cap) {
-        Any[] a = (Any[]) new Object[cap];
+    private void resize(int cap) {
+        T[] a = (T[]) new Object[cap];
         for (int i = succ(first + 1), j = 1; i != last || (capacity == size && j == 1);
              i = succ(++i), j++) {
             a[j] = items[i];
@@ -49,7 +49,7 @@ public class ArrayDeque<Any> {
     /**
      * Add a node at first.
      */
-    public void addFirst(Any item) {
+    public void addFirst(T item) {
         items[first] = item;
         first = succ(--first);
         size++;
@@ -61,7 +61,7 @@ public class ArrayDeque<Any> {
     /**
      * Add a node at last.
      */
-    public void addLast(Any item) {
+    public void addLast(T item) {
         items[last] = item;
         last = succ(++last);
         size++;
@@ -83,9 +83,9 @@ public class ArrayDeque<Any> {
     /**
      * Remove the first node and return its value.
      */
-    public Any removeFirst() {
+    public T removeFirst() {
         first = succ(++first);
-        Any ret = items[first];
+        T ret = items[first];
         items[first] = null;
         size--;
         if (capacity > 16 && (double) capacity / size > PROPORTION) {
@@ -97,9 +97,9 @@ public class ArrayDeque<Any> {
     /**
      * Remove the last node and return its value.
      */
-    public Any removeLast() {
+    public T removeLast() {
         last = succ(--last);
-        Any ret = items[last];
+        T ret = items[last];
         items[last] = null;
         size--;
         if (capacity > 16 && (double) capacity / size > PROPORTION) {
@@ -111,7 +111,7 @@ public class ArrayDeque<Any> {
     /**
      * Return the ith items
      */
-    public Any get(int index) {
+    public T get(int index) {
         int j = succ(first + 1);
         for (int i = 0; i < index; i++) {
             if (i > size) {

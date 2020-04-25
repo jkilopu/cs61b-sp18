@@ -2,24 +2,24 @@
  * Deque implemented with double-linked-circular-list.
  * @author jkilopu
  */
-public class LinkedListDeque<Any> {
+public class LinkedListDeque<T> {
 
     private int size;
-    private AnyNode sentinel; // first == sentinel.next, last == sentinel.prev
+    private TNode sentinel; // first == sentinel.next, last == sentinel.prev
 
     /**
      * Create an empty deque.
      */
     public LinkedListDeque() {
-        sentinel = new AnyNode();
+        sentinel = new TNode();
         size = 0;
     }
     /**
      * Create a copy of another deque.
      */
     public LinkedListDeque(LinkedListDeque other) {
-        AnyNode p = other.sentinel.next;
-        sentinel = new AnyNode();
+        TNode p = other.sentinel.next;
+        sentinel = new TNode();
         size = 0;
         while (p != other.sentinel) {
             addLast(p.item);
@@ -30,15 +30,15 @@ public class LinkedListDeque<Any> {
     /**
      * The node of Double-linked-list.
      */
-    private class AnyNode {
-        Any item;
-        AnyNode prev;
-        AnyNode next;
+    private class TNode {
+        T item;
+        TNode prev;
+        TNode next;
 
         /**
          * Create a node that is circular.
          */
-        AnyNode() { // item is automatically assigned null when instantiate.
+        TNode() { // item is automatically assigned null when instantiate.
             prev = this;
             next = this;
         }
@@ -46,7 +46,7 @@ public class LinkedListDeque<Any> {
         /**
          * Return the item at the ith position in this.
          */
-        private Any getRecursive(int index) {
+        private T getRecursive(int index) {
             if (index == 0) {
                 return this.item;
             }
@@ -57,8 +57,8 @@ public class LinkedListDeque<Any> {
     /**
      * Add a node at first.
      */
-    public void addFirst(Any x) {
-        AnyNode p = new AnyNode();
+    public void addFirst(T x) {
+        TNode p = new TNode();
         p.item = x;
         p.prev = sentinel;
         p.next = sentinel.next;
@@ -70,8 +70,8 @@ public class LinkedListDeque<Any> {
     /**
      * Add a node at last.
      */
-    public void addLast(Any x) {
-        AnyNode p = new AnyNode();
+    public void addLast(T x) {
+        TNode p = new TNode();
         p.item = x;
         p.next = sentinel;
         p.prev = sentinel.prev;
@@ -84,7 +84,7 @@ public class LinkedListDeque<Any> {
      * Print all the items in deque from first to last
      */
     public void printDeque() {
-        AnyNode p = sentinel.next;
+        TNode p = sentinel.next;
         while (p != sentinel) {
             System.out.print(p.item + " ");
             p = p.next;
@@ -95,8 +95,8 @@ public class LinkedListDeque<Any> {
     /**
      * Remove the first node and return its value.
      */
-    public Any removeFirst() {
-        Any x = sentinel.next.item;
+    public T removeFirst() {
+        T x = sentinel.next.item;
         sentinel.next.next.prev = sentinel;
         sentinel.next = sentinel.next.next;
         if (x != null) {  // avoid negative number
@@ -108,8 +108,8 @@ public class LinkedListDeque<Any> {
     /**
      * Remove the last node and return its value.
      */
-    public Any removeLast() {
-        Any x = sentinel.prev.item;
+    public T removeLast() {
+        T x = sentinel.prev.item;
         sentinel.prev.prev.next = sentinel;
         sentinel.prev = sentinel.prev.prev;
         if (x != null) {
@@ -121,8 +121,8 @@ public class LinkedListDeque<Any> {
     /**
      * Return the ith items
      */
-    public Any get(int index) {
-        AnyNode p = sentinel.next;
+    public T get(int index) {
+        TNode p = sentinel.next;
         for (int i = 0; i < index && p != sentinel; i++) {
             p = p.next;
         }
@@ -132,7 +132,7 @@ public class LinkedListDeque<Any> {
     /**
      * Return the ith items recursively.
      */
-    public Any getRecursive(int index) {
+    public T getRecursive(int index) {
         if (index > size - 1) {
             return null;
         }
