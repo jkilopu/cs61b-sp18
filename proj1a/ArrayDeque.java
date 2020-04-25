@@ -102,6 +102,9 @@ public class ArrayDeque<Any> {
         Any ret = items[last];
         items[last] = null;
         size--;
+        if (capacity > 16 && (double) capacity / size > PROPORTION) {
+            resize(capacity / (PROPORTION / 2));
+        }
         return ret;
     }
 
