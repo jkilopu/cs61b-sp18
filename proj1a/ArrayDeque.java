@@ -1,4 +1,5 @@
 public class ArrayDeque<T> {
+
     private static final int FACTOR = 2;
     private static final int PROPORTION = 4;
     private int capacity;
