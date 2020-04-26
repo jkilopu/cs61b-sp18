@@ -89,8 +89,9 @@ public class ArrayDeque<T> implements Deque<T> {
      */
     @Override
     public T removeFirst() {
-        if (size == 0)
+        if (size == 0) {
             return null;
+        }
         first = succ(++first);
         T ret = items[first];
         items[first] = null;
@@ -106,8 +107,9 @@ public class ArrayDeque<T> implements Deque<T> {
      */
     @Override
     public T removeLast() {
-        if (size == 0)
+        if (size == 0) {
             return null;
+        }
         last = succ(--last);
         T ret = items[last];
         items[last] = null;

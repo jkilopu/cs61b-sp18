@@ -20,10 +20,10 @@ public class Palindrome {
         do {
             ch1 = d.removeFirst();
             ch2 = d.removeLast();
-            if(ch1 != ch2 && ch2 != null) { // Avoid one character status.
+            if (ch1 != ch2 && ch2 != null) { // Avoid one character status.
                 return false;
             }
-        } while(ch1 != null && ch2 != null);
+        } while (ch1 != null && ch2 != null);
         return true;
     }
 
@@ -36,10 +36,11 @@ public class Palindrome {
         do {
             ch1 = d.removeFirst();
             ch2 = d.removeLast();
-            if(ch2 != null && !cc.equalChars(ch1, ch2)) { // "ch2 != null" is in the front so as to avoid null convert to char.
+            if (ch2 != null && !cc.equalChars(ch1, ch2)) {
+                // "ch2 != null" is in the front so as to avoid null convert to char.
                 return false;
             }
-        } while(ch1 != null && ch2 != null);
+        } while (ch1 != null && ch2 != null);
         return true;
     }
 }
