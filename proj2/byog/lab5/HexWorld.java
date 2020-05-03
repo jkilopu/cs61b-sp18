@@ -1,3 +1,6 @@
+/* First part: Drawing A Single Hexagon. Completed
+ * Second part: Drawing A Tesselation of Hexagons. Only know the solution.
+ */
 package byog.lab5;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -14,6 +17,7 @@ import java.util.Random;
 public class HexWorld { // Is extending TETile better? I believe so.
     private static final int WIDTH = 60;
     private static final int HEIGHT = 30;
+    private static final Random RANDOM = new Random();
 
     /**
      * Subclass only contains coordinate.
@@ -78,11 +82,24 @@ public class HexWorld { // Is extending TETile better? I believe so.
         }
     }
 
+    public static TETile randomTile() {
+        int tileNum = RANDOM.nextInt(5);
+        switch (tileNum) {
+            case 0: return Tileset.FLOWER;
+            case 1: return Tileset.GRASS;
+            case 2: return Tileset.TREE;
+            case 3: return Tileset.SAND;
+            case 4: return Tileset.MOUNTAIN;
+            default: return Tileset.MOUNTAIN;
+        }
+    }
+
     public static void main(String args[]) {
         TERenderer ter = new TERenderer();
         ter.initialize(WIDTH, HEIGHT);
         Position pos = new Position(6, 12);
-        TETile[][] world = createHexagonWorld(WIDTH, HEIGHT, pos, 6, Tileset.NOTHING, Tileset.WALL);
+        TETile part = randomTile();
+        TETile[][] world = createHexagonWorld(WIDTH, HEIGHT, pos, 6, Tileset.NOTHING, part);
         ter.renderFrame(world);
     }
 
