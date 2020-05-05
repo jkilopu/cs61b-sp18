@@ -10,26 +10,27 @@ public class Game {
     TERenderer ter = new TERenderer();
     TETile[][] world;
     /* Feel free to change the width and height. */
-    public static final int WIDTH = 80;
-    public static final int HEIGHT = 30;
-    private static final Size size = new Size(WIDTH, HEIGHT);
+    public static final int WIDTH = 160;
+    public static final int HEIGHT = 60;
+    private Size size = new Size(WIDTH, HEIGHT);
 
     /**
      * Constructor
      */
     Game() {
-        createEmptyWorld();
+        createEmptyWorld(size());
         initWorld();
     }
 
-    private void createEmptyWorld() {
-        world = new TETile[size.x][size.y];
+    void createEmptyWorld(Size size) {
+        this.size = new Size(size.x, size.y);
+        world = new TETile[size().x][size().y];
         initWorld();
     }
 
     private void initWorld() {
-        for (int x = 0; x < size.x; x++) {
-            for (int y = 0; y < size.y; y++) {
+        for (int x = 0; x < size().x; x++) {
+            for (int y = 0; y < size().y; y++) {
                 world[x][y] = Tileset.NOTHING;
             }
         }
@@ -59,15 +60,14 @@ public class Game {
         // drawn if the same inputs had been given to playWithKeyboard().
         int option = getOption(input);
         long seed = Long.parseLong(getSeed(input));
-        Size worldSize = new Size(WIDTH, HEIGHT);
-        switch (option) {
-            case 1:
-                saveSeed(seed);
-                break;
-            case 2:
-                seed = getSeed(file);
-                break;
-        }
+//        switch (option) {
+//            case 1:
+//                saveSeed(seed);
+//                break;
+//            case 2:
+//                seed = getSeed(file);
+//                break;
+//        }
         Random random = new Random(seed);
         TETile[][] finalWorldFrame = generateWorld(random);
         return finalWorldFrame;
@@ -75,13 +75,31 @@ public class Game {
 
     private TETile[][] generateWorld(Random random) {
         Connection cons = new Connection();
-        cons.addConnection(size(), random);
-        for (int i = 0; i < cons.nCon; i++) {
-            Position p = cons.connections[i];
-            Size size = ;
-            Room room = new Room(p, size);
+        cons.addFirstCon(size(), random); // Must have a first connection
+        int failTimes = 0;
+        Position c = cons.connections.poll();
+        boolean isFirstConnected = false;
+        Position tmp = c; // First connection must be wall later.(Because it is not likely connect modules).
+        while (c != null && failTimes < 5) {
+            Room room = new Room();
+            Position[] news = room.addRandomRoom(random, c, world);
+            if (news == null) { // Fail to add new room.
+                failTimes++;
+            }
+            else {
+                for (int i = 0; i < news.length; i++) {
+                    cons.connections.offer(news[i]); // More connections!
+                }
+            }
+            if (c == tmp) {
+                isFirstConnected = true;
+            }
+            c = cons.connections.poll(); // Next connection.
         }
-        return null;
+        if (!isFirstConnected) {
+            world[tmp.x][tmp.y] = Tileset.WALL;
+        }
+        return world;
     }
 
     Size size() {
