@@ -3,9 +3,14 @@ package byog.Core;
 import java.util.Iterator;
 
 class Position extends Coordinate {
+
     Position(int x, int y) {
         this.x = x;
         this.y = y;
+    }
+
+    Position() {
+
     }
 
     void up() {
