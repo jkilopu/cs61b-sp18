@@ -15,23 +15,22 @@ public class testRoom {
      */
     public void testAddRoom() {
         Position p = new Position(0 , 0);
-        Position con = new Position(0, 1);
-        Position[] connections = {con};
         Size size = new Size(4, 4);
         Size worldSize = new Size(4, 4);
-        Room r = new Room(p, size, connections);
+        Room r = new Room(p, size);
 
         TETile f = Tileset.FLOOR;
         TETile w = Tileset.WALL;
         TETile n = Tileset.NOTHING;
-        TETile[][] exp = {{w, f, w, w}, {w, f, f, w}, {w, f, f, w}, {w, w, w, w}};
+        TETile[][] exp = {{w, w, w, w}, {w, f, f, w}, {w, f, f, w}, {w, w, w, w}};
 
-        TETile[][] world = Game.createEmptyWorld(worldSize);
-        r.addRoom(world);
+        Game game = new Game();
+        game.createEmptyWorld(worldSize);
+        r.addRoom(game.world);
 
-        for (int i = 0; i < world.length; i++) {
-            for (int j = 0; j < world[0].length; j++) {
-                assertEquals(exp[i][j].character(), world[i][j].character());
+        for (int i = 0; i < game.size().x; i++) {
+            for (int j = 0; j < game.size().y; j++) {
+                assertEquals(exp[i][j].character(), game.world[i][j].character());
             }
         }
     }
