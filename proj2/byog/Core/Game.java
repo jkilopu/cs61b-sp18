@@ -21,7 +21,7 @@ public class Game {
     /**
      * Constructor
      */
-    Game() {
+    public Game() {
         createEmptyWorld(size());
         initWorld();
     }
@@ -128,12 +128,15 @@ public class Game {
         String regexNew = "(?i)(N[1-9][0-9]*|0)S";
         String regexLoad = "(?i)^L.*";
         String regexSave = "(?i).*(:Q)$";
-        if (input.matches(regexNew))
+        if (input.matches(regexNew)) {
             return 0;
-        if (input.matches(regexLoad))
+        }
+        if (input.matches(regexLoad)) {
             return 1;
-        if (input.matches(regexSave))
+        }
+        if (input.matches(regexSave)) {
             return 2;
+        }
         return -1; // Invalid input.
     }
 

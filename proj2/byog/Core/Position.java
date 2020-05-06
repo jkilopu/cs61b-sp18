@@ -1,7 +1,5 @@
 package byog.Core;
 
-import java.util.Iterator;
-
 class Position extends Coordinate {
 
     Position(int x, int y) {

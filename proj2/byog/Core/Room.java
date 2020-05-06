@@ -8,9 +8,9 @@ import java.util.Random;
 class Room {
     private Size size;
     private Position pos; // Left bottom.
-    private static final int rMax = 15;
-    private static final int rMin = 4;
-    private static final int cMax = 7; // Max num of connection.
+    private static final int RMax = 15;
+    private static final int RMin = 4;
+    private static final int CMax = 7; // Max num of connection.
 
     /**
      * Only used for test.
@@ -57,7 +57,7 @@ class Room {
         int tryTimes = 0;
         /* Randomly generate room */
         do {
-            size = new Size(RandomUtils.uniform(random, rMin, rMax), RandomUtils.uniform(random, rMin, rMax));
+            size = new Size(RandomUtils.uniform(random, RMin, RMax), RandomUtils.uniform(random, RMin, RMax));
             /* Make sure connection(c) is on the wall of room */
             pos = getRandomPosWithRoom(random, c);
             tryTimes++;
@@ -68,7 +68,7 @@ class Room {
         addRoom(world);
         world[c.x][c.y] = Tileset.FLOOR;
         /* Add new connections */
-        Position[] news = new Position[RandomUtils.uniform(random, cMax) + 1];
+        Position[] news = new Position[RandomUtils.uniform(random, CMax) + 1];
         for (int i = 0; i < news.length; i++) {
             news[i] = getRandomPosWithRoom(random, pos);
         }
@@ -88,16 +88,13 @@ class Room {
             if (select < 0.25) {
                 gp.x = RandomUtils.uniform(random, p.x + 1, boundary.x);
                 gp.y = p.y;
-            }
-            else if (select < 0.5) {
+            } else if (select < 0.5) {
                 gp.x = RandomUtils.uniform(random, p.x + 1, boundary.x);
                 gp.y = boundary.y;
-            }
-            else if (select < 0.75) {
+            } else if (select < 0.75) {
                 gp.y = RandomUtils.uniform(random, p.y + 1, boundary.y);
                 gp.x = p.x;
-            }
-            else {
+            } else {
                 gp.y = RandomUtils.uniform(random, p.y + 1, boundary.y);
                 gp.x = boundary.x;
             }
@@ -107,16 +104,13 @@ class Room {
             if (select < 0.25) {
                 gp.x = RandomUtils.uniform(random, boundary.x + 1, p.x);
                 gp.y = p.y;
-            }
-            else if (select < 0.5) {
+            } else if (select < 0.5) {
                 gp.x = RandomUtils.uniform(random, boundary.x + 1, p.x);
                 gp.y = boundary.y;
-            }
-            else if (select < 0.75) {
+            } else if (select < 0.75) {
                 gp.y = RandomUtils.uniform(random, boundary.y + 1, p.y);
                 gp.x = p.x;
-            }
-            else {
+            } else {
                 gp.y = RandomUtils.uniform(random, boundary.y + 1, p.y);
                 gp.x = boundary.x;
             }
