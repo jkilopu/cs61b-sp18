@@ -8,9 +8,9 @@ import java.util.Random;
 class Room {
     private Size size;
     private Position pos; // Left bottom.
-    private static final int RMax = 15;
-    private static final int RMin = 4;
-    private static final int CMax = 7; // Max num of connection.
+    private static final int RMAX = 15;
+    private static final int RMIN = 4;
+    private static final int CMAX = 7; // Max num of connection.
 
     /**
      * Only used for test.
@@ -57,7 +57,7 @@ class Room {
         int tryTimes = 0;
         /* Randomly generate room */
         do {
-            size = new Size(RandomUtils.uniform(random, RMin, RMax), RandomUtils.uniform(random, RMin, RMax));
+            size = new Size(RandomUtils.uniform(random, RMIN, RMAX), RandomUtils.uniform(random, RMIN, RMAX));
             /* Make sure connection(c) is on the wall of room */
             pos = getRandomPosWithRoom(random, c);
             tryTimes++;
@@ -68,7 +68,7 @@ class Room {
         addRoom(world);
         world[c.x][c.y] = Tileset.FLOOR;
         /* Add new connections */
-        Position[] news = new Position[RandomUtils.uniform(random, CMax) + 1];
+        Position[] news = new Position[RandomUtils.uniform(random, CMAX) + 1];
         for (int i = 0; i < news.length; i++) {
             news[i] = getRandomPosWithRoom(random, pos);
         }

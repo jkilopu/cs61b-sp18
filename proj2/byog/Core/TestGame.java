@@ -3,7 +3,7 @@ import org.junit.Assert;
 import static org.junit.Assert.*;
 import org.junit.Test;
 
-public class testGame {
+public class TestGame {
 
     @Test
     public void testGetSeed() {

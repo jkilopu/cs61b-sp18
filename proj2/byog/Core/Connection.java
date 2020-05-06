@@ -1,7 +1,5 @@
 package byog.Core;
 
-import byog.TileEngine.TETile;
-
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Random;

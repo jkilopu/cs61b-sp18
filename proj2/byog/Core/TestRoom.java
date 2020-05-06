@@ -5,7 +5,7 @@ import byog.TileEngine.Tileset;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-public class testRoom {
+public class TestRoom {
 
     @Test
     /* ####
@@ -21,7 +21,6 @@ public class testRoom {
 
         TETile f = Tileset.FLOOR;
         TETile w = Tileset.WALL;
-        TETile n = Tileset.NOTHING;
         TETile[][] exp = {{w, w, w, w}, {w, f, f, w}, {w, f, f, w}, {w, w, w, w}};
 
         Game game = new Game();

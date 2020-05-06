@@ -95,7 +95,6 @@ public class Game {
         while (c != null && failTimes < MAXFAILTIME) {
             Room room = new Room();
             Position[] news = room.addRandomRoom(random, c, world);
-            System.out.println(TETile.toString(world));
             if (news == null) { // Fail to add new room.
                 failTimes++;
             }
