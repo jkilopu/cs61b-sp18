@@ -4,14 +4,18 @@ import byog.TileEngine.TERenderer;
 import byog.TileEngine.TETile;
 import byog.TileEngine.Tileset;
 
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Random;
 
 public class Game {
     TERenderer ter = new TERenderer();
     TETile[][] world;
     /* Feel free to change the width and height. */
-    public static final int WIDTH = 160;
-    public static final int HEIGHT = 60;
+    public static final int WIDTH = 80;
+    public static final int HEIGHT = 40;
+    public static final int MAXFAILTIME = 1000;
     private Size size = new Size(WIDTH, HEIGHT);
 
     /**
@@ -59,15 +63,23 @@ public class Game {
         // and return a 2D tile representation of the world that would have been
         // drawn if the same inputs had been given to playWithKeyboard().
         int option = getOption(input);
-        long seed = Long.parseLong(getSeed(input));
-//        switch (option) {
-//            case 1:
-//                saveSeed(seed);
-//                break;
-//            case 2:
-//                seed = getSeed(file);
-//                break;
-//        }
+        String sSeed = getSeed(input);
+        long seed = 0;
+        switch (option) {
+            case 0:
+                seed =  Long.parseLong(sSeed);
+                break;
+            case 1:
+                seed = readSeed();
+                break;
+            case 2:
+                saveSeed(sSeed);
+                System.exit(0);
+                break;
+            case -1:
+                System.exit(1);
+                break;
+        }
         Random random = new Random(seed);
         TETile[][] finalWorldFrame = generateWorld(random);
         return finalWorldFrame;
@@ -80,9 +92,10 @@ public class Game {
         Position c = cons.connections.poll();
         boolean isFirstConnected = false;
         Position tmp = c; // First connection must be wall later.(Because it is not likely connect modules).
-        while (c != null && failTimes < 5) {
+        while (c != null && failTimes < MAXFAILTIME) {
             Room room = new Room();
             Position[] news = room.addRandomRoom(random, c, world);
+            System.out.println(TETile.toString(world));
             if (news == null) { // Fail to add new room.
                 failTimes++;
             }
@@ -91,10 +104,10 @@ public class Game {
                     cons.connections.offer(news[i]); // More connections!
                 }
             }
-            if (c == tmp) {
+            c = cons.connections.poll(); // Next connection.
+            if (tmp.equals(c)) {
                 isFirstConnected = true;
             }
-            c = cons.connections.poll(); // Next connection.
         }
         if (!isFirstConnected) {
             world[tmp.x][tmp.y] = Tileset.WALL;
@@ -112,13 +125,16 @@ public class Game {
      * @return 0 means "new game", 1 means "load", 2 means "save"
      */
     static int getOption(String input) {
+        String regexNew = "(?i)(N[1-9][0-9]*|0)S";
         String regexLoad = "(?i)^L.*";
         String regexSave = "(?i).*(:Q)$";
+        if (input.matches(regexNew))
+            return 0;
         if (input.matches(regexLoad))
             return 1;
         if (input.matches(regexSave))
             return 2;
-        return 0; // default: new game;
+        return -1; // Invalid input.
     }
 
     /**
@@ -135,11 +151,30 @@ public class Game {
         return "";
     }
 
-    private void saveSeed() {
-        ;
+    private void saveSeed(String s) {
+        try {
+            FileWriter fw = new FileWriter("savefile.txt");
+            fw.write(s);
+            fw.close();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    private long getSeed() {
-        return 0;
+    private long readSeed() {
+        int ch;
+        String s = "";
+        try {
+            FileReader fr = new FileReader("savefile.txt");
+            while ((ch = fr.read()) != -1) {
+                s += (char) ch;
+            }
+            fr.close();
+        }
+        catch (IOException e) {
+            System.exit(1);
+        }
+        return Long.parseLong(s);
     }
 }
