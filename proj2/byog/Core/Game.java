@@ -3,6 +3,7 @@ package byog.Core;
 import byog.TileEngine.TERenderer;
 import byog.TileEngine.TETile;
 import byog.TileEngine.Tileset;
+import edu.princeton.cs.introcs.StdDraw;
 
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -23,7 +24,6 @@ public class Game {
      */
     public Game() {
         createEmptyWorld(size());
-        initWorld();
     }
 
     void createEmptyWorld(Size size) {
@@ -44,6 +44,21 @@ public class Game {
      * Method used for playing a fresh game. The game should start from the main menu.
      */
     public void playWithKeyboard() {
+        ter.initialize(size().x, size().y);
+        String input = "";
+
+        ter.showMenu();
+        while (true) {
+            if (!StdDraw.hasNextKeyTyped()) {
+                continue;
+            }
+            char key = StdDraw.nextKeyTyped();
+            input += key;
+            if (playWithInputString(input) != null) {
+                ter.renderFrame(world);
+                input = ""; // reset
+            }
+        }
     }
 
     /**
@@ -67,7 +82,7 @@ public class Game {
         long seed = 0;
         switch (option) {
             case 0:
-                seed =  Long.parseLong(sSeed);
+                seed = Long.parseLong(sSeed);
                 break;
             case 1:
                 seed = readSeed();
@@ -77,15 +92,18 @@ public class Game {
                 System.exit(0);
                 break;
             case -1:
-                System.exit(1);
-                break;
+                return null;
         }
         Random random = new Random(seed);
-        TETile[][] finalWorldFrame = generateWorld(random);
-        return finalWorldFrame;
+        TETile[][] finalWorldState = generateWorld(random);
+        return finalWorldState;
     }
 
+    /**
+     * Generate random world.
+     */
     private TETile[][] generateWorld(Random random) {
+        initWorld();
         Connection cons = new Connection();
         cons.addFirstCon(size(), random); // Must have a first connection
         int failTimes = 0;
@@ -124,7 +142,7 @@ public class Game {
      * @return 0 means "new game", 1 means "load", 2 means "save"
      */
     static int getOption(String input) {
-        String regexNew = "(?i)(N[1-9][0-9]*|0)S";
+        String regexNew = "(?i).*(N[1-9][0-9]*|0)S.*";
         String regexLoad = "(?i)^L.*";
         String regexSave = "(?i).*(:Q)$";
         if (input.matches(regexNew)) {
