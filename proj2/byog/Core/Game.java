@@ -13,6 +13,7 @@ import java.util.Random;
 public class Game {
     TERenderer ter = new TERenderer();
     TETile[][] world;
+    Player player;
     /* Feel free to change the width and height. */
     public static final int WIDTH = 80;
     public static final int HEIGHT = 40;
@@ -24,6 +25,7 @@ public class Game {
      */
     public Game() {
         createEmptyWorld(size());
+        player = new Player();
     }
 
     void createEmptyWorld(Size size) {
@@ -46,6 +48,7 @@ public class Game {
     public void playWithKeyboard() {
         ter.initialize(size().x, size().y);
         String input = "";
+        boolean isPlaying = false;
 
         ter.showMenu();
         while (true) {
@@ -55,10 +58,32 @@ public class Game {
             char key = StdDraw.nextKeyTyped();
             input += key;
             if (playWithInputString(input) != null) {
+                isPlaying = true;
                 ter.renderFrame(world);
                 input = ""; // reset
             }
+            if (isPlaying) {
+                detectMovePlayer(key, world);
+            }
         }
+    }
+
+    private void detectMovePlayer(char key, TETile[][] world) {
+        switch (key) {
+            case 'w':
+                player.moveUp(world);
+                break;
+            case 'a':
+                player.moveLeft(world);
+                break;
+            case 's':
+                player.moveDown(world);
+                break;
+            case 'd':
+                player.moveRight(world);
+                break;
+        }
+        ter.renderFrame(world);
     }
 
     /**
@@ -129,6 +154,8 @@ public class Game {
         if (!isFirstConnected) {
             world[tmp.x][tmp.y] = Tileset.WALL;
         }
+        player.getRandomPlayer(world, random);
+        player.addPlayer(world);
         return world;
     }
 
