@@ -98,4 +98,26 @@ public class TERenderer {
         }
         StdDraw.show();
     }
+
+    /**
+     * Draw the menu.
+     */
+    public void showMenu() {
+        int midWidth = width / 2;
+        int midHeight = height / 2;
+        Font fTitle = new Font("Monaco", Font.BOLD, 30);
+        Font fOption = new Font("Monaco", Font.BOLD, 20);
+        String title = "CS61B proj2";
+        String[] options = {"New game(N)", "Load game(L)", "Quit(:Q)"};
+
+        StdDraw.clear(Color.black);
+        StdDraw.setPenColor(Color.white);
+        StdDraw.setFont(fTitle);
+        StdDraw.text(midWidth, midHeight / 2 * 3, title);
+        StdDraw.setFont(fOption);
+        for (int i = 0 ; i < options.length; i++) {
+            StdDraw.text(midWidth, midHeight + 4 * (1 - i), options[i]);
+        }
+        StdDraw.show();
+    }
 }
