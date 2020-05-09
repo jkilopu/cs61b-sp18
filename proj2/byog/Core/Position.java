@@ -3,12 +3,11 @@ package byog.Core;
 class Position extends Coordinate {
 
     Position(int x, int y) {
-        this.x = x;
-        this.y = y;
+        super(x, y);
     }
 
     Position() {
-
+        super();
     }
 
     @Override
