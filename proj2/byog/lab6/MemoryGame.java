@@ -25,11 +25,11 @@ public class MemoryGame {
         }
 
         int seed = Integer.parseInt(args[0]);
-        MemoryGame game = new MemoryGame(40, 40);
+        MemoryGame game = new MemoryGame(40, 40, seed);
         game.startGame();
     }
 
-    public MemoryGame(int width, int height) {
+    public MemoryGame(int width, int height, int seed) {
         /* Sets up StdDraw so that it has a width by height grid of 16 by 16 squares as its canvas
          * Also sets up the scale so the top left is (0,0) and the bottom right is (width, height)
          */
@@ -44,16 +44,28 @@ public class MemoryGame {
         StdDraw.enableDoubleBuffering();
 
         //TODO: Initialize random number generator
+        rand = new Random(seed);
     }
 
     public String generateRandomString(int n) {
-        //TODO: Generate random string of letters of length n
-        return null;
+        String s = "";
+        for (int i = 0; i < n; i++) {
+            int j = rand.nextInt(n);
+            char c = CHARACTERS[j];
+            s += c;
+        }
+        return s;
     }
 
     public void drawFrame(String s) {
         //TODO: Take the string and display it in the center of the screen
         //TODO: If game is not over, display relevant game information at the top of the screen
+        StdDraw.clear(Color.BLACK);
+        if (gameOver) {
+            s = "Game over! You played " + round + "rounds!";
+        }
+        StdDraw.text(width * 16 / 2, height * 16 / 2, s);
+        StdDraw.show();
     }
 
     public void flashSequence(String letters) {
