@@ -125,7 +125,7 @@ class Room {
         Position boundary = new Position(pos.x + size.x - 1, pos.y + size.y - 1);
         for (int i = pos.x + 1; i < boundary.x; i++) {
             for (int j = pos.y + 1; j < boundary.y; j++) {
-                if (i - 1 < 0 || j - 1 < 0 || i + 1 >= world.length || j + 1 >= world[0].length || world[i][j] != Tileset.NOTHING) {
+                if (i - 1 < 0 || j - 1 < 0 || i + 1 >= world.length || j + 1 >= world[0].length || world[i][j].character() != Tileset.NOTHING.character()) {
                     return true;
                 }
             }
