@@ -79,7 +79,7 @@ class Room {
      * Make sure connection on room wall, though return value maybe pos or connection.
      * Or say, get connection by pos or get pos by connections.
      */
-    Position getRandomPosWithRoom(Random random, Position p) {
+    private Position getRandomPosWithRoom(Random random, Position p) {
         Position boundary;
         double select = RandomUtils.uniform(random);
         Position gp = new Position();
