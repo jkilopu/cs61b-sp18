@@ -5,9 +5,7 @@ import byog.TileEngine.TETile;
 import byog.TileEngine.Tileset;
 import edu.princeton.cs.introcs.StdDraw;
 
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.Random;
 
 public class Game {
@@ -63,12 +61,15 @@ public class Game {
                 input = ""; // reset
             }
             if (isPlaying) {
-                detectMovePlayer(key, world);
+                detectMovePlayer(key);
             }
         }
     }
 
-    private void detectMovePlayer(char key, TETile[][] world) {
+    /**
+     * Detect if the next position is proper, if so, move.
+     */
+    private void detectMovePlayer(char key) {
         switch (key) {
             case 'w':
                 player.moveUp(world);
@@ -104,24 +105,79 @@ public class Game {
         // drawn if the same inputs had been given to playWithKeyboard().
         int option = getOption(input);
         String sSeed = getSeed(input);
-        long seed = 0;
+        TETile[][] finalWorldState = null;
+
         switch (option) {
             case 0:
-                seed = Long.parseLong(sSeed);
+                long seed = Long.parseLong(sSeed);
+                Random random = new Random(seed);
+                finalWorldState = generateWorld(random);
                 break;
             case 1:
-                seed = readSeed();
+                finalWorldState = loadGame();
                 break;
             case 2:
-                saveSeed(sSeed);
+                saveGame();
                 System.exit(0);
                 break;
-            case -1:
-                return null;
         }
-        Random random = new Random(seed);
-        TETile[][] finalWorldState = generateWorld(random);
         return finalWorldState;
+    }
+
+    /**
+     * Save information of player, world.
+     */
+    private void saveGame() {
+        try {
+            FileOutputStream fileOut1 =
+                    new FileOutputStream("savePlayer.ser");
+            FileOutputStream fileOut2 =
+                    new FileOutputStream("saveWorld.ser");
+            ObjectOutputStream playerOut = new ObjectOutputStream(fileOut1);
+            ObjectOutputStream worldOut = new ObjectOutputStream(fileOut2);
+            playerOut.writeObject(player);
+            worldOut.writeObject(world);
+            playerOut.close();
+            worldOut.close();
+            fileOut1.close();
+            fileOut2.close();
+        } catch(IOException i) {
+            i.printStackTrace();
+        }
+    }
+
+    /**
+     * Load the game from .ser files.
+     */
+    private TETile[][] loadGame() {
+        try {
+            FileInputStream fileIn1 =
+                    new FileInputStream("savePlayer.ser");
+            FileInputStream fileIn2 =
+                    new FileInputStream("saveWorld.ser");
+            ObjectInputStream playerIn = new ObjectInputStream(fileIn1);
+            ObjectInputStream worldIn = new ObjectInputStream(fileIn2);
+            world = (TETile[][]) worldIn.readObject();
+            player = (Player) playerIn.readObject();
+            playerIn.close();
+            worldIn.close();
+            fileIn1.close();
+            fileIn2.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found");
+            System.exit(0);
+        } catch(IOException i) {
+            i.printStackTrace();
+            System.exit(1);
+        } catch(ClassNotFoundException c)
+        {
+            System.out.println("Employee class not found");
+            c.printStackTrace();
+            System.exit(1);
+        }
+        size.x = world.length;
+        size.y = world[0].length;
+        return world;
     }
 
     /**
@@ -154,7 +210,7 @@ public class Game {
         if (!isFirstConnected) {
             world[tmp.x][tmp.y] = Tileset.WALL;
         }
-        player.getRandomPlayer(world, random);
+        player.setRandomPlayer(world, random);
         player.addPlayer(world);
         return world;
     }
@@ -196,32 +252,5 @@ public class Game {
                 return s;
         }
         return "";
-    }
-
-    private void saveSeed(String s) {
-        try {
-            FileWriter fw = new FileWriter("savefile.txt");
-            fw.write(s);
-            fw.close();
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private long readSeed() {
-        int ch;
-        String s = "";
-        try {
-            FileReader fr = new FileReader("savefile.txt");
-            while ((ch = fr.read()) != -1) {
-                s += (char) ch;
-            }
-            fr.close();
-        }
-        catch (IOException e) {
-            System.exit(1);
-        }
-        return Long.parseLong(s);
     }
 }
