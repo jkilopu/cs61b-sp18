@@ -12,6 +12,7 @@ public class Game {
     TERenderer ter = new TERenderer();
     TETile[][] world;
     Player player;
+    Door door;
     /* Feel free to change the width and height. */
     public static final int WIDTH = 80;
     public static final int HEIGHT = 40;
@@ -24,6 +25,7 @@ public class Game {
     public Game() {
         createEmptyWorld(size());
         player = new Player();
+        door = new Door();
     }
 
     void createEmptyWorld(Size size) {
@@ -212,6 +214,7 @@ public class Game {
         }
         player.setRandomPlayer(world, random);
         player.addPlayer(world);
+        door.setRandomDoor(world, random);
         return world;
     }
 
