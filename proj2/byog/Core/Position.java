@@ -32,16 +32,16 @@ class Position extends Coordinate {
         return other.x == this.x && other.y == this.y;
     }
 
-    void up() {
-        y++;
+    Position up() {
+        return new Position(x, y + 1);
     }
-    void down() {
-        y--;
+    Position down() {
+        return new Position(x, y - 1);
     }
-    void right() {
-        x++;
+    Position right() {
+        return new Position(x + 1, y);
     }
-    void left() {
-        x--;
+    Position left() {
+        return new Position(x - 1, y);
     }
 }
