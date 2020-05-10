@@ -61,16 +61,13 @@ class Door {
     private boolean canBeDoor(TETile[][] world, Position p) {
         Map<TETile, Integer> tileMap = cntSurroundings(world, p);
         // The position rule for surroundings of a door.
-        if (tileMap.get(Tileset.WALL) == 2 && tileMap.get(Tileset.NOTHING) == 1 &&
-                tileMap.get(Tileset.FLOOR) == 1) {
-            return true;
-        }
-        return false;
+        return tileMap.get(Tileset.WALL) == 2 && tileMap.get(Tileset.NOTHING) == 1 &&
+                tileMap.get(Tileset.FLOOR) == 1;
     }
 
     /**
      * Count objects in four basic directions.
-     * @Return return a map only have keys: Tileset.NOTHING, Tileset.WALL, Tileset.FLOOR,
+     * @return return a map only have keys: Tileset.NOTHING, Tileset.WALL, Tileset.FLOOR,
      * corresponding value is its amount.
      */
     private Map<TETile, Integer> cntSurroundings(TETile[][] world, Position p) {
