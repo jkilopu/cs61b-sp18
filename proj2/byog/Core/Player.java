@@ -40,53 +40,51 @@ class Player implements Serializable {
      */
     void moveUp(TETile[][] world) {
         Position lastPos = new Position(pos.x, pos.y);
-        pos.up();
-        if (isConflict(world)) {
-            pos.down();
+        Position newPos = pos.up();
+        if (isConflict(world, newPos)) {
             return;
         }
+        pos = newPos;
         setWorldStatus(world, lastPos);
     }
 
     void moveDown(TETile[][] world) {
         Position lastPos = new Position(pos.x, pos.y);
-        pos.down();
-        if (isConflict(world)) {
-            pos.up();
+        Position newPos = pos.down();
+        if (isConflict(world, newPos)) {
             return;
         }
+        pos = newPos;
         setWorldStatus(world, lastPos);
     }
 
     void moveLeft(TETile[][] world) {
         Position lastPos = new Position(pos.x, pos.y);
-        pos.left();
-        if (isConflict(world)) {
-            pos.right();
+        Position newPos = pos.left();
+        if (isConflict(world, newPos)) {
             return;
         }
+        pos = newPos;
         setWorldStatus(world, lastPos);
     }
 
     void moveRight(TETile[][] world) {
         Position lastPos = new Position(pos.x, pos.y);
-        pos.right();
-        if (isConflict(world)) {
-            pos.left();
+        Position newPos = pos.right();
+        if (isConflict(world, newPos)) {
             return;
         }
+        pos = newPos;
         setWorldStatus(world, lastPos);
     }
 
     /**
      * Return true if the present position is conflicted.
      */
-    boolean isConflict(TETile[][] world) {
-        if (pos.x >= world.length || pos.x < 0 ||
-                pos.y >= world[0].length || pos.y < 0 || world[pos.x][pos.y].character() != Tileset.FLOOR.character()) {
-            return true;
-        }
-        return false;
+    boolean isConflict(TETile[][] world, Position p) {
+        return p.x >= world.length || p.x < 0 || p.y >= world[0].length || p.y < 0 ||
+                world[p.x][p.y].character() == Tileset.WALL.character() || world[p.x][p.y].character() == Tileset.NOTHING.character() ||
+                world[p.x][p.y].character() == Tileset.LOCKED_DOOR.character();
     }
 
     /**
