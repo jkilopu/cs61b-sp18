@@ -4,8 +4,8 @@ import edu.princeton.cs.algs4.StdRandom;
 import edu.princeton.cs.algs4.StdStats;
 
 public class PercolationStats {
-    double[] x;
-    int T;
+    private double[] x;
+    private int T;
 
     /**
      * Constructor, fills x and T.
@@ -21,9 +21,10 @@ public class PercolationStats {
         x = new double[T];
         for (int i = 0; i < T; i++) {
             Percolation p = pf.make(N);
-            int[] pos = generateUnrepeatableRandomNumbers(N * N); // All positions with random order.
+            int[] pos = generateUnrepeatableRandomNumbers(N * N); // All positions with
+            // random order.
             int index = 0;
-            while(!p.percolates()) {
+            while (!p.percolates()) {
                 int position = pos[index++];
                 int row = position / N, col = position % N;
                 p.open(row, col);
@@ -67,13 +68,4 @@ public class PercolationStats {
     public double confidenceHigh() {
         return mean() + 1.96 * stddev() / Math.sqrt(T);
     }                                // high endpoint of 95% confidence interval
-
-    /**
-     * Single test.
-     */
-    public static void main(String[] args) {
-        PercolationFactory pf = new PercolationFactory();
-        PercolationStats ps = new PercolationStats(100, 100, pf);
-        System.out.println(ps.mean() + " " + ps.stddev() + "\n" + ps.confidenceLow() + " " +ps.confidenceHigh());
-    }
 }

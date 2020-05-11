@@ -6,7 +6,7 @@ public class Percolation {
     private boolean[] world;
     private int worldSize;
     private int numberOfOpenSites;
-    WeightedQuickUnionUF disjointSet;
+    private WeightedQuickUnionUF disjointSet;
     private static int top;
     private static int bottom;
 
@@ -61,7 +61,7 @@ public class Percolation {
         }
     }
 
-    int rowColTo1D(int row, int col) {
+    private int rowColTo1D(int row, int col) {
         return row * worldSize + col;
     }
 
