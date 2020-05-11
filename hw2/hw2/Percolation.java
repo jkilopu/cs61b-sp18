@@ -7,8 +7,8 @@ public class Percolation {
     private int worldSize;
     private int numberOfOpenSites;
     private WeightedQuickUnionUF disjointSet;
-    private static int top;
-    private static int bottom;
+    private int top;
+    private int bottom;
 
     /**
      * Create N-by-N grid, with all sites initially blocked,
