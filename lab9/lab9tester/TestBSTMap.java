@@ -5,6 +5,9 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 import lab9.BSTMap;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Tests by Brendan Hu, Spring 2015, revised for 2018 by Josh Hug
  */
@@ -86,7 +89,42 @@ public class TestBSTMap {
         assertTrue(b.get("hi") != null);
     }
 
-    public static void main(String[] args) {
-        jh61b.junit.TestRunner.runTests(TestBSTMap.class);
+    @Test
+    public void keySetTest() {
+        BSTMap<String, Integer> b = new BSTMap<>();
+        b.put("A", 1);
+        b.put("C", 3);
+        b.put("B", 2);
+        b.put("D", 4);
+        Set<String> act = b.keySet();
+
+        Set<String> exp = new HashSet<>();
+        exp.add("A");
+        exp.add("D");
+        exp.add("C");
+        exp.add("B");
+
+        assertEquals(exp, act);
+    }
+
+    @Test
+    public void removeTest() {
+        BSTMap<String, Integer> b = new BSTMap<>();
+        b.put("A", 1);
+        b.put("C", 3);
+        b.put("B", 2);
+        b.put("D", 4);
+        assertEquals((Integer) 3, b.remove("C"));
+        assertEquals(3, b.size());
+        assertEquals((Integer) 2, b.remove("B"));
+        assertEquals(2, b.size());
+        assertEquals(null, b.remove("Z"));
+        assertEquals(2, b.size());
+        assertEquals((Integer) 1, b.remove("A"));
+        assertEquals(1, b.size());
+        assertEquals(null, b.remove("D", 3));
+        assertEquals(1, b.size());
+        assertEquals((Integer) 4, b.remove("D", 4));
+        assertEquals(0, b.size());
     }
 }
