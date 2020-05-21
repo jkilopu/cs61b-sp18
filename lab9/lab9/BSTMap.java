@@ -114,7 +114,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
     /* Returns a Set view of the keys contained in this map. */
     @Override
     public Set<K> keySet() {
-        Set set = new TreeSet();
+        Set<K> set = new TreeSet<>();
         keySetHelper(set, root);
         return set;
     }
@@ -126,7 +126,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
      * @return An array of node that contains deleted node and pre node, null on failed find.
      * None recursively.
      */
-    private List find(K key, V value, Node p) {
+    private List<Node> find(K key, V value, Node p) {
         if (key == null) {
             return null;
         }
@@ -140,7 +140,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
                 p = p.left;
             }
         }
-        List<Node> list = new ArrayList(2);
+        List<Node> list = new ArrayList<>(2);
         list.add(0 ,prev);
         list.add(1, p);
         return list;
@@ -242,8 +242,8 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
      */
     @Override
     public V remove(K key) {
-        List list = find(key, null, root);
-        Node p = (Node) list.get(1), prev = (Node) list.get(0);
+        List<Node> list = find(key, null, root);
+        Node p = list.get(1), prev = list.get(0);
         V removeValue;
         if (p == null) {
             return null;
@@ -259,8 +259,9 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
      **/
     @Override
     public V remove(K key,  V value) {
-        List list = find(key, value, root);
-        Node p = (Node) list.get(1), prev = (Node) list.get(0);
+        List<Node> list = find(key, value, root);
+        Node p = list.get(1);
+        Node prev = list.get(0);
         V removeValue;
         if (p == null) {
             return null;
