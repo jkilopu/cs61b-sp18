@@ -22,9 +22,13 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
         return size / buckets.length;
     }
 
-    public MyHashMap() {
-        buckets = new ArrayMap[DEFAULT_SIZE];
+    public MyHashMap(int initialSize) {
+        buckets = new  ArrayMap[initialSize];
         this.clear();
+    }
+
+    public MyHashMap() {
+        this(DEFAULT_SIZE);
     }
 
     /* Removes all of the mappings from this map. */
@@ -61,6 +65,7 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
     private void resize() {
         ArrayMap<K, V>[] oldBuckets = buckets;
         buckets = new ArrayMap[buckets.length * 2];
+        this.clear();
         for (int i = 0; i < oldBuckets.length; i++) {
             for (K key : oldBuckets[i]) {
                 put(key, oldBuckets[i].get(key));
@@ -106,7 +111,12 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
      * UnsupportedOperationException. */
     @Override
     public V remove(K key) {
-        throw new UnsupportedOperationException();
+        int hashcode = hash(key);
+        if (buckets[hashcode].containsKey(key)) {
+            size--;
+        }
+        V result = buckets[hashcode].remove(key);
+        return result;
     }
 
     /* Removes the entry for the specified key only if it is currently mapped to
@@ -114,7 +124,12 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
      * throw an UnsupportedOperationException.*/
     @Override
     public V remove(K key, V value) {
-        throw new UnsupportedOperationException();
+        int hashcode = hash(key);
+        if (buckets[hashcode].get(key) == value) {
+            size--;
+        }
+        V result = buckets[hashcode].remove(key, value);
+        return result;
     }
 
     @Override
