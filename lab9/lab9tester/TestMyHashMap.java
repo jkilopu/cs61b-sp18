@@ -5,6 +5,10 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 import lab9.MyHashMap;
 
+import java.security.Key;
+import java.util.Set;
+import java.util.TreeSet;
+
 /**
  * Tests by Brendan Hu, Spring 2015, revised for 2018 by Josh Hug
  */
@@ -127,7 +131,40 @@ public class TestMyHashMap {
         assertEquals(studentIDs.get("evil alan"), studentIDs.get("alan"));
     }
 
-    public static void main(String[] args) {
-        jh61b.junit.TestRunner.runTests(TestMyHashMap.class);
+
+    @Test
+    public void TestIterator() {
+        MyHashMap<String, Integer> hashMap = new MyHashMap<>(2);
+        hashMap.put("Apple", 1);
+        hashMap.put("Bug", 2);
+        hashMap.put("Cat", 3);
+
+        Set<String> set = new TreeSet<>();
+        set.add("Cat");
+        set.add("Dog");
+        set.add("Apple");
+        set.add("Bug");
+        for (String str : hashMap) {
+            assertTrue(set.contains(str));
+        }
+    }
+
+    @Test
+    public void TestRemove() {
+        MyHashMap<String, Integer> hashMap = new MyHashMap<>(2);
+        hashMap.put("Apple", 1);
+        hashMap.put("Bug", 2);
+        hashMap.put("Cat", 3);
+        hashMap.put("Dog", 4);
+
+        assertEquals((Integer) 2, hashMap.remove("Bug"));
+        assertFalse(hashMap.containsKey("Bug"));
+        assertEquals(3, hashMap.size());
+        assertEquals(null, hashMap.remove("Cat", 1));
+        assertTrue(hashMap.containsKey("Cat"));
+        assertEquals(3, hashMap.size());
+        assertEquals((Integer) 3, hashMap.remove("Cat", 3));
+        assertFalse(hashMap.containsKey("Cat"));
+        assertEquals(2, hashMap.size());
     }
 }
