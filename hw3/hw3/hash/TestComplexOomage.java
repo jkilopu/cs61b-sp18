@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class TestComplexOomage {
@@ -36,15 +37,34 @@ public class TestComplexOomage {
     /* TODO: Create a list of Complex Oomages called deadlyList
      * that shows the flaw in the hashCode function.
      */
-    /*
+
     @Test
     public void testWithDeadlyParams() {
         List<Oomage> deadlyList = new ArrayList<>();
 
-        // Your code here.
+        int N = 20; // N params.
+        for (int i = 0; i < N; i++) {
+            List<Integer> params = new LinkedList<>();
+            for (int j = 0; j < 20; j++) {
+                if (j < 10) { // 高位消失
+                    params.add(2 * i);
+                }
+                else {
+                    params.add(0);
+                }
+            }
+            ComplexOomage co = new ComplexOomage(params);
+            deadlyList.add(co);
+        }
 
-        assertTrue(OomageTestUtility.haveNiceHashCodeSpread(deadlyList, 10));
-    } */
+        /* visualizer */
+        double scale = 0.5;
+        int M = 10;
+        HashTableDrawingUtility.setScale(scale);
+        HashTableVisualizer.visualize(deadlyList, M, scale);
+        /* Test */
+        assertTrue(OomageTestUtility.haveNiceHashCodeSpread(deadlyList, M));
+    }
 
     /** Calls tests for SimpleOomage. */
     public static void main(String[] args) {
