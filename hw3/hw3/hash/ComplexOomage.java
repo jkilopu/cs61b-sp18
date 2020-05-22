@@ -10,10 +10,10 @@ public class ComplexOomage implements Oomage {
     private static final double WIDTH = 0.05;
 
     @Override
-    public int hashCode() {
+    public int hashCode() { // Review
         int total = 0;
         for (int x : params) {
-            total = total * 256;
+            total = total * 251; // Think about why can't be 256.
             total = total + x;
         }
         return total;
